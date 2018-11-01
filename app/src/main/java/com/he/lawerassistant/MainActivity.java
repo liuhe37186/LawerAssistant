@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity {
     TextView toolbarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
+    String url = "file:///android_asset/www/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context, WebActivity.class);
-                intent.putExtra("data", strings[position]);
+                intent.putExtra("url", url+strings[position]+".html");
                 startActivity(intent);
             }
         });
