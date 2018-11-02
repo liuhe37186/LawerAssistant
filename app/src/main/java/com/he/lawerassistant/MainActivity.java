@@ -68,6 +68,12 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        check_update();
+    }
+
     private void check_update() {
         CommonService service = new RetrofitManager(this).createService(CommonService.class);
         Call<ResponseBean<UpdateBean>> call = service.getChuKuXiaoXi(10);
