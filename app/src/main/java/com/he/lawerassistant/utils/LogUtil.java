@@ -8,9 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class KLog {
+public class LogUtil {
 
-    private static boolean IS_SHOW_LOG = false;
+    private static boolean IS_SHOW_LOG = true;
 
     private static final String DEFAULT_MESSAGE = "execute";
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");

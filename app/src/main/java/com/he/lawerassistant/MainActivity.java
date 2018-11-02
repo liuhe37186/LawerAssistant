@@ -10,14 +10,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.allenliu.versionchecklib.v2.AllenVersionChecker;
+import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
+import com.allenliu.versionchecklib.v2.builder.UIData;
+import com.allenliu.versionchecklib.v2.callback.ForceUpdateListener;
 import com.he.lawerassistant.http.RetrofitManager;
 import com.he.lawerassistant.http.bean.ResponseBean;
+import com.he.lawerassistant.http.bean.UpdateBean;
 import com.he.lawerassistant.service.CommonService;
-import com.he.lawerassistant.utils.KLog;
+import com.he.lawerassistant.utils.LogUtil;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,27 +56,52 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent(context, WebActivity.class);
                 intent.putExtra("url", url+list.get(position)+".html");
                 startActivity(intent);
-                check_update();
+
             }
         });
+        check_update();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 
     private void check_update() {
         CommonService service = new RetrofitManager(this).createService(CommonService.class);
-//        Map<String,Integer> map = new HashMap<>();
-//        map.put("version_code",12);
-        Call<ResponseBean> call = service.getChuKuXiaoXi(12);
-        call.enqueue(new Callback<ResponseBean>() {
+        Call<ResponseBean<UpdateBean>> call = service.getChuKuXiaoXi(10);
+        call.enqueue(new Callback<ResponseBean<UpdateBean>>() {
             @Override
-            public void onResponse(Call<ResponseBean> call, Response<ResponseBean> response) {
-                KLog.e(response.toString());
+            public void onResponse(Call<ResponseBean<UpdateBean>> call, Response<ResponseBean<UpdateBean>> response) {
+                LogUtil.e("xxxx",response.toString());
+
+                LogUtil.e("xxx",response.body().getData());
+                LogUtil.e("xxx",response.body().getCode());
+                LogUtil.e("xxx",response.body().getMsg());
+                String url = response.body().getData().getUrl();
+                String content = response.body().getData().getContent();
+                String isForce = response.body().getData().getIsForce();
+                DownloadBuilder builder = AllenVersionChecker
+                        .getInstance()
+                        .downloadOnly(
+                                UIData.create().setDownloadUrl(url).setTitle("版本更新").setContent(content + "\n\n" + "建议在wifi条件下更新")
+                        );
+                if(isForce.equals("1")){
+                    builder.setForceUpdateListener(new ForceUpdateListener() {
+                        @Override
+                        public void onShouldForceUpdate() {
+                            finish();
+                        }
+                    });
+                }
+
+                builder.excuteMission(context);
             }
 
             @Override
-            public void onFailure(Call<ResponseBean> call, Throwable t) {
-                KLog.e(t.toString());
+            public void onFailure(Call<ResponseBean<UpdateBean>> call, Throwable t) {
+                LogUtil.e(t.toString());
                 t.printStackTrace();
             }
         });
