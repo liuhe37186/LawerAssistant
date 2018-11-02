@@ -10,12 +10,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.he.lawerassistant.http.RetrofitClient;
+import com.he.lawerassistant.http.RetrofitManager;
 import com.he.lawerassistant.http.bean.ResponseBean;
 import com.he.lawerassistant.service.CommonService;
 import com.he.lawerassistant.utils.KLog;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,19 +53,28 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent(context, WebActivity.class);
                 intent.putExtra("url", url+list.get(position)+".html");
                 startActivity(intent);
+                check_update();
             }
         });
 
-        Call<ResponseBean> call = RetrofitClient.getInstance().getRetrofit().create(CommonService.class).getChuKuXiaoXi("");
+
+    }
+
+    private void check_update() {
+        CommonService service = new RetrofitManager(this).createService(CommonService.class);
+//        Map<String,Integer> map = new HashMap<>();
+//        map.put("version_code",12);
+        Call<ResponseBean> call = service.getChuKuXiaoXi(12);
         call.enqueue(new Callback<ResponseBean>() {
             @Override
             public void onResponse(Call<ResponseBean> call, Response<ResponseBean> response) {
-                KLog.e("xxxx",response);
+                KLog.e(response.toString());
             }
 
             @Override
             public void onFailure(Call<ResponseBean> call, Throwable t) {
-
+                KLog.e(t.toString());
+                t.printStackTrace();
             }
         });
     }
