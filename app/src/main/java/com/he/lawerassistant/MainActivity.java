@@ -10,8 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.he.lawerassistant.http.RetrofitClient;
+import com.he.lawerassistant.http.bean.ResponseBean;
+import com.he.lawerassistant.service.CommonService;
+import com.he.lawerassistant.utils.KLog;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.list_view)
@@ -40,6 +48,19 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent(context, WebActivity.class);
                 intent.putExtra("url", url+strings[position]+".html");
                 startActivity(intent);
+            }
+        });
+
+        Call<ResponseBean> call = RetrofitClient.getInstance().getRetrofit().create(CommonService.class).getChuKuXiaoXi("");
+        call.enqueue(new Callback<ResponseBean>() {
+            @Override
+            public void onResponse(Call<ResponseBean> call, Response<ResponseBean> response) {
+                KLog.e("xxxx",response);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBean> call, Throwable t) {
+
             }
         });
     }
