@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.AboutActivity"
+    android:orientation="vertical">
+
+   <include layout="@layout/toolbar_layout"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="90dp"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_below="@+id/logo"
+            android:layout_centerHorizontal="true"
+            android:text="@string/tips"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:id="@+id/ll_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tip"
+                android:layout_below="@+id/tip"
+                android:text="邮箱："
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tip"
+                android:autoLink="email"
+                android:text="@string/email" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/version_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_email"
+            android:layout_marginTop="6dp"
+            android:text="版本号：1.0.0"
+            android:layout_centerHorizontal="true"/>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
