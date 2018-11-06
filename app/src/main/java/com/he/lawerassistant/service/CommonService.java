@@ -10,6 +10,6 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 public interface CommonService {
-    @GET("/api/v1.0/app/update")
+    @POST("/api/v1.0/app/update")
     Call<ResponseBean<UpdateBean>> getChuKuXiaoXi(@Query("version_code") int code);
 }

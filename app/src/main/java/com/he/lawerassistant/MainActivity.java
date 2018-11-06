@@ -82,6 +82,10 @@ public class MainActivity extends BaseActivity {
             public void onResponse(Call<ResponseBean<UpdateBean>> call, Response<ResponseBean<UpdateBean>> response) {
                 LogUtil.e("xxxx",response.toString());
 
+                if(response.body() == null){
+                    return;
+                }
+
                 LogUtil.e("xxx",response.body().getData());
                 LogUtil.e("xxx",response.body().getCode());
                 LogUtil.e("xxx",response.body().getMsg());
