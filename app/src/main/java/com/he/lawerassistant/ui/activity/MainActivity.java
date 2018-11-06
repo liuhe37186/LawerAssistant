@@ -131,12 +131,10 @@ public class MainActivity extends BaseCommonActivity {
 //                    currentFragment = new FristFragment();
 //                    switchContent(currentFragment);
 //                    return true;
-//                case R.id.navigation_item_2:
-//                    currentIndex = 2;
-//                    menuItem.setChecked(true);
-//                    currentFragment = new ThirdFragment();
-//                    switchContent(currentFragment);
-//                    return true;
+                case R.id.navigation_item_2:
+                    Intent search = new Intent(context, OnlineLawsActivity.class);
+                    startActivity(search);
+                    return true;
                 case R.id.navigation_item_3:
                     Intent intent = new Intent(context, AboutActivity.class);
                     startActivity(intent);
@@ -244,5 +242,6 @@ public class MainActivity extends BaseCommonActivity {
         list.add("道路交通安全法");
         list.add("食品安全法");
         list.add("工伤保险条例");
+        list.add("law01.01");
     }
 }

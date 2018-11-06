@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -37,14 +38,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WebActivity extends BaseActivity {
+public class OnlineLawsActivity extends BaseActivity {
 
-    @BindView(R.id.web_view)
-    WebView webView;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
+    @BindView(R.id.btnRight)
+    ImageView btnRight;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.et_content)
     EditText etContent;
     @BindView(R.id.tv_result_num)
@@ -57,24 +58,23 @@ public class WebActivity extends BaseActivity {
     ImageView ivDelete;
     @BindView(R.id.search_bar)
     LinearLayout searchBar;
-    @BindView(R.id.btnRight)
-    ImageView btnRight;
+    @BindView(R.id.web_view)
+    WebView webView;
     @BindView(R.id.pd)
     ProgressBar pd;
     @BindView(R.id.rl_pd)
     RelativeLayout rlPd;
-
-    boolean isNight;
     String url = "";
-
+    boolean isNight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
+        setContentView(R.layout.activity_online_laws);
         ButterKnife.bind(this);
-        url = getIntent().getStringExtra("url");
-        toolbarTitle.setText(parserUrl(url));
-        isNight = SharedPreferencesUtil.getBoolean(WebActivity.this, Constant.ISNIGHT, false);
+//        url = getIntent().getStringExtra("url");
+        url = "http://search.chinalaw.gov.cn/search2.html";
+//        toolbarTitle.setText(parserUrl(url));
+        isNight = SharedPreferencesUtil.getBoolean(OnlineLawsActivity.this, Constant.ISNIGHT, false);
 
         initSearchEvent();
 
@@ -86,6 +86,8 @@ public class WebActivity extends BaseActivity {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        settings.setLoadWithOverviewMode(true);
         setWebViewClient();
         rlPd.setVisibility(View.VISIBLE);
 
@@ -98,25 +100,8 @@ public class WebActivity extends BaseActivity {
         }
 
         webView.loadUrl(url);
-        /*webView.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-                        webView.goBack();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });*/
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
     private void setWebViewClient() {
         webView.setWebChromeClient(new WebChromeClient() {
@@ -138,7 +123,7 @@ public class WebActivity extends BaseActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url != null && url.endsWith(".html")) {
-                    Intent intent = new Intent(WebActivity.this, WebActivity.class);
+                    Intent intent = new Intent(OnlineLawsActivity.this, WebActivity.class);
                     intent.putExtra("url", url);
                     Log.e("xxxx", "shouldOverrideUrlLoading" + url);
                     startActivity(intent);
@@ -152,7 +137,7 @@ public class WebActivity extends BaseActivity {
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();
                 if (url != null && url.endsWith(".html")) {
-                    Intent intent = new Intent(WebActivity.this, WebActivity.class);
+                    Intent intent = new Intent(OnlineLawsActivity.this, WebActivity.class);
                     intent.putExtra("url", url);
                     Log.e("xxxx", "shouldOverrideUrlLoading" + url);
                     startActivity(intent);
@@ -280,6 +265,4 @@ public class WebActivity extends BaseActivity {
         return Uri.decode(title);
 
     }
-
-
 }

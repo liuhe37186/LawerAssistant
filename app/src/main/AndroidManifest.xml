@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.WebActivity" />
-        <activity android:name=".ui.activity.AboutActivity"></activity>
+        <activity android:name=".ui.activity.AboutActivity" />
+        <activity android:name=".ui.activity.OnlineLawsActivity"></activity>
     </application>
 
 </manifest>
