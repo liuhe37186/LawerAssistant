@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,15 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.allenliu.versionchecklib.v2.AllenVersionChecker;
-import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
-import com.allenliu.versionchecklib.v2.builder.UIData;
-import com.allenliu.versionchecklib.v2.callback.ForceUpdateListener;
 import com.he.lawerassistant.R;
 import com.he.lawerassistant.http.Constant;
 import com.he.lawerassistant.http.RetrofitManager;
-import com.he.lawerassistant.http.bean.ResponseBean;
 import com.he.lawerassistant.http.bean.UpdateBean;
+import com.he.lawerassistant.http.response.ResponseTransformer;
+import com.he.lawerassistant.http.schedulers.SchedulerProvider;
 import com.he.lawerassistant.service.CommonService;
 import com.he.lawerassistant.utils.LogUtil;
 import com.he.lawerassistant.utils.SharedPreferencesUtil;
@@ -35,9 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseCommonActivity {
     @BindView(R.id.list_view)
@@ -181,8 +175,25 @@ public class MainActivity extends BaseCommonActivity {
     }
 
     private void check_update() {
-        CommonService service = new RetrofitManager(this).createService(CommonService.class);
-        Call<ResponseBean<UpdateBean>> call = service.getChuKuXiaoXi(10);
+        CommonService service = RetrofitManager.getInstance().create(CommonService.class);
+
+        service.getChuKuXiaoXi(10)
+                .compose(ResponseTransformer.handleResult())
+                .compose(SchedulerProvider.getInstance().applySchedulers())
+                .subscribe(new Consumer<UpdateBean>() {
+                    @Override
+                    public void accept(UpdateBean updateBean) throws Exception {
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                    }
+                });
+
+
+        /*Call<ResponseBean<UpdateBean>> call = service.getChuKuXiaoXi(10);
         call.enqueue(new Callback<ResponseBean<UpdateBean>>() {
             @Override
             public void onResponse(Call<ResponseBean<UpdateBean>> call, Response<ResponseBean<UpdateBean>> response) {
@@ -216,7 +227,7 @@ public class MainActivity extends BaseCommonActivity {
                 LogUtil.e(t.toString());
                 t.printStackTrace();
             }
-        });
+        });*/
     }
 
 
