@@ -13,7 +13,7 @@ import com.he.lawerassistant.R;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 
-public class BaseActivity extends SwipeBackActivity {
+public class BaseCommonActivity extends AppCompatActivity {
     public Activity mActivity;
 
     @Override
