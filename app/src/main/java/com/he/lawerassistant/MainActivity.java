@@ -18,6 +18,8 @@ import com.he.lawerassistant.http.RetrofitManager;
 import com.he.lawerassistant.http.bean.ResponseBean;
 import com.he.lawerassistant.http.bean.UpdateBean;
 import com.he.lawerassistant.service.CommonService;
+import com.he.lawerassistant.ui.activity.BaseActivity;
+import com.he.lawerassistant.ui.activity.WebActivity;
 import com.he.lawerassistant.utils.LogUtil;
 import java.util.ArrayList;
 import java.util.List;

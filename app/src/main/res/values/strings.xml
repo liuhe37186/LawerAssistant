@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">律政助手</string>
+    <string name="app_name">小法典</string>
     <string name="action_settings">Settings</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="author">小法典</string>
+    <string name="email">693215409@qq.com</string>
+    <string name="tips">感谢您的使用！如果您有任何的意见\n或建议欢迎你联系我！</string>
 </resources>
