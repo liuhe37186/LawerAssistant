@@ -1,6 +1,5 @@
-package com.he.lawerassistant.service;
+package com.he.lawerassistant.http.service;
 
-import com.he.lawerassistant.http.bean.ResponseBean;
 import com.he.lawerassistant.http.bean.UpdateBean;
 import com.he.lawerassistant.http.response.Response;
 

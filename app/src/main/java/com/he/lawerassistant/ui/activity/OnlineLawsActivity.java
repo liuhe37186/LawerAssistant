@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -38,7 +40,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class OnlineLawsActivity extends BaseActivity {
+public class OnlineLawsActivity extends BaseCommonActivity {
 
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
@@ -72,7 +74,7 @@ public class OnlineLawsActivity extends BaseActivity {
         setContentView(R.layout.activity_online_laws);
         ButterKnife.bind(this);
 //        url = getIntent().getStringExtra("url");
-        url = "http://search.chinalaw.gov.cn/search2.html";
+        url = "https://www.chinacourt.org/law";
 //        toolbarTitle.setText(parserUrl(url));
         isNight = SharedPreferencesUtil.getBoolean(OnlineLawsActivity.this, Constant.ISNIGHT, false);
 
@@ -88,7 +90,45 @@ public class OnlineLawsActivity extends BaseActivity {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setLoadWithOverviewMode(true);
+        settings.setBuiltInZoomControls(true); // 设置显示缩放按钮
+        settings.setSupportZoom(true); // 支持缩放
+        settings.setUseWideViewPort(true);
         setWebViewClient();
+
+        DisplayMetrics metrics = new DisplayMetrics();
+
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int mDensity = metrics.densityDpi;
+
+        Log.d("maomao", "densityDpi = " + mDensity);
+
+        if (mDensity == 240) {
+
+            settings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+
+        } else if (mDensity == 160) {
+
+            settings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+
+        } else if(mDensity == 120) {
+
+            settings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
+
+        }else if(mDensity == DisplayMetrics.DENSITY_XHIGH){
+
+            settings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+
+        }else if (mDensity == DisplayMetrics.DENSITY_TV){
+
+            settings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+
+        }else{
+
+            settings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+
+        }
+
         rlPd.setVisibility(View.VISIBLE);
 
         if (isNight) {
@@ -104,6 +144,19 @@ public class OnlineLawsActivity extends BaseActivity {
 
 
     private void setWebViewClient() {
+
+        webView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+                        webView.goBack();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {

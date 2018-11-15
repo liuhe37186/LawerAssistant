@@ -22,7 +22,7 @@ import com.he.lawerassistant.http.RetrofitManager;
 import com.he.lawerassistant.http.bean.UpdateBean;
 import com.he.lawerassistant.http.response.ResponseTransformer;
 import com.he.lawerassistant.http.schedulers.SchedulerProvider;
-import com.he.lawerassistant.service.CommonService;
+import com.he.lawerassistant.http.service.CommonService;
 import com.he.lawerassistant.utils.LogUtil;
 import com.he.lawerassistant.utils.SharedPreferencesUtil;
 
