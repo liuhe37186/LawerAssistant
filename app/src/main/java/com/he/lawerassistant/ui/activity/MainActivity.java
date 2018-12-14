@@ -16,9 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.corelibs.api.RetrofitManager;
 import com.he.lawerassistant.R;
 import com.he.lawerassistant.http.Constant;
-import com.he.lawerassistant.http.RetrofitManager;
 import com.he.lawerassistant.http.bean.UpdateBean;
 import com.he.lawerassistant.http.response.ResponseTransformer;
 import com.he.lawerassistant.http.schedulers.SchedulerProvider;
@@ -96,7 +96,7 @@ public class MainActivity extends BaseCommonActivity {
                         navigation.setCheckedItem(R.id.navigation_item_day);
                     }
 
-
+                    recreate();
                 }
 
                 @Override
