@@ -5,17 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.trello.rxlifecycle2.components.support.RxFragment;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.ObservableTransformer;
 
 /**
  * Fragment基类, 继承自此类的Fragment需要实现{@link #getLayoutId}, {@link #init}
@@ -34,7 +30,7 @@ import io.reactivex.ObservableTransformer;
  * Created by Ryan on 2016/1/5.
  */
 public abstract class BaseFragment<V extends BaseView, T extends BasePresenter<V>>
-        extends RxFragment implements BaseView {
+        extends Fragment implements BaseView {
 
     private View parentView;
     private Unbinder unbinder;
@@ -154,20 +150,20 @@ public abstract class BaseFragment<V extends BaseView, T extends BasePresenter<V
         return getActivity();
     }
 
-    @Override
-    public <V> ObservableTransformer<V, V> bind() {
-        return bindToLifecycle();
-    }
-
-    @Override
-    public <V> ObservableTransformer<V, V> bindUntil(FragmentEvent event) {
-        return bindUntilEvent(event);
-    }
-
-    @Override
-    public <V> ObservableTransformer<V, V> bindUntil(ActivityEvent event) {
-        return null;
-    }
+//    @Override
+//    public <V> ObservableTransformer<V, V> bind() {
+//        return bindToLifecycle();
+//    }
+//
+//    @Override
+//    public <V> ObservableTransformer<V, V> bindUntil(FragmentEvent event) {
+//        return bindUntilEvent(event);
+//    }
+//
+//    @Override
+//    public <V> ObservableTransformer<V, V> bindUntil(ActivityEvent event) {
+//        return null;
+//    }
 
     @Override
     public void finishView() {

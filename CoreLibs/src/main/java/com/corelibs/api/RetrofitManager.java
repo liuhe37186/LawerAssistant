@@ -46,6 +46,7 @@ public class RetrofitManager {
                 .build();
 
         okHttpBuilder.addInterceptor(interceptor);
+        okHttpBuilder.addInterceptor(new HttpLoggingInterceptor());
         // 创建Retrofit
         mRetrofit = new Retrofit.Builder()
                 .client(okHttpBuilder.build())

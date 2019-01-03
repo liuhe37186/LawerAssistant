@@ -6,26 +6,17 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.corelibs.R;
 import com.corelibs.common.AppManager;
 import com.corelibs.utils.ToastMgr;
 import com.corelibs.views.LoadingDialog;
-import com.qmuiteam.qmui.widget.QMUIEmptyView;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
-import io.reactivex.ObservableTransformer;
 
 /**
  * Activity基类, 继承自此类的Activity需要实现{@link #getLayoutId},{@link #init}
@@ -40,7 +31,7 @@ import io.reactivex.ObservableTransformer;
  * Created by Ryan on 2015/12/28.
  */
 public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V>>
-        extends RxAppCompatActivity implements BaseView {
+        extends AppCompatActivity implements BaseView {
 
     protected T presenter;
     private LoadingDialog loadingDialog;
@@ -179,20 +170,20 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     public void showEmptyHint() {
     }
 
-    @Override
-    public <T> ObservableTransformer<T, T> bind() {
-        return bindToLifecycle();
-    }
-
-    @Override
-    public <T> ObservableTransformer<T, T> bindUntil(ActivityEvent event) {
-        return bindUntilEvent(event);
-    }
-
-    @Override
-    public <T> ObservableTransformer<T, T> bindUntil(FragmentEvent event) {
-        return null;
-    }
+//    @Override
+//    public <T> ObservableTransformer<T, T> bind() {
+//        return bindToLifecycle();
+//    }
+//
+//    @Override
+//    public <T> ObservableTransformer<T, T> bindUntil(ActivityEvent event) {
+//        return bindUntilEvent(event);
+//    }
+//
+//    @Override
+//    public <T> ObservableTransformer<T, T> bindUntil(FragmentEvent event) {
+//        return null;
+//    }
 
     @Override
     public void finishView() {
