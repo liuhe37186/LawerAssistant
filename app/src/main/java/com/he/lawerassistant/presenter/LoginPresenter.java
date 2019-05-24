@@ -8,6 +8,7 @@ import com.corelibs.subscriber.ResponseSubscriber;
 import com.he.lawerassistant.contract.LoginContract;
 import com.he.lawerassistant.http.bean.UpdateBean;
 import com.he.lawerassistant.http.response.Response;
+import com.he.lawerassistant.http.response.ResponseTransformer;
 import com.he.lawerassistant.http.service.CommonService;
 import com.he.lawerassistant.utils.LogUtil;
 

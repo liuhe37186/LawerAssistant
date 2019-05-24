@@ -39,13 +39,13 @@ public class RetrofitManager {
         okHttpBuilder.connectTimeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS);//连接超时时间
         okHttpBuilder.writeTimeout(DEFAULT_READ_TIME_OUT, TimeUnit.SECONDS);//写操作 超时时间
         okHttpBuilder.readTimeout(DEFAULT_READ_TIME_OUT, TimeUnit.SECONDS);//读操作超时时间
-        HttpCommonInterceptor interceptor = new HttpCommonInterceptor.Builder()
+        HttpCommonInterceptor headerInterceptor = new HttpCommonInterceptor.Builder()
                 .addHeaderParams("Platform", PLATFORM)
                 .addHeaderParams("Token", TOKEN)
                 .addHeaderParams("UserId", USER_ID)
                 .build();
 
-        okHttpBuilder.addInterceptor(interceptor);
+        okHttpBuilder.addInterceptor(headerInterceptor);
         okHttpBuilder.addInterceptor(new HttpLoggingInterceptor());
         // 创建Retrofit
         mRetrofit = new Retrofit.Builder()

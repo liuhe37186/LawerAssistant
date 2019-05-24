@@ -86,17 +86,6 @@ public class MainActivity extends BaseCommonActivity {
                 public void onDrawerOpened(View drawerView) {
                     super.onDrawerOpened(drawerView);
 
-                    boolean isNight = SharedPreferencesUtil.getBoolean(context, Constant.ISNIGHT, false);
-                    LogUtil.d("isNight=" + isNight);
-                    if (isNight) {
-                        //使用夜间模式
-                        navigation.setCheckedItem(R.id.navigation_item_night);
-                    } else {
-                        //不使用夜间模式
-                        navigation.setCheckedItem(R.id.navigation_item_day);
-                    }
-
-                    recreate();
                 }
 
                 @Override

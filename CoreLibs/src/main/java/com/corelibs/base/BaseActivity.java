@@ -76,7 +76,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
      * 获取通过{@link #createPresenter()}生成的presenter对象
      * @return Presenter
      */
-    public T getPresenter() {
+    public T getPresenter(){
         return presenter;
     }
 
@@ -169,21 +169,6 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     @Override
     public void showEmptyHint() {
     }
-
-//    @Override
-//    public <T> ObservableTransformer<T, T> bind() {
-//        return bindToLifecycle();
-//    }
-//
-//    @Override
-//    public <T> ObservableTransformer<T, T> bindUntil(ActivityEvent event) {
-//        return bindUntilEvent(event);
-//    }
-//
-//    @Override
-//    public <T> ObservableTransformer<T, T> bindUntil(FragmentEvent event) {
-//        return null;
-//    }
 
     @Override
     public void finishView() {
